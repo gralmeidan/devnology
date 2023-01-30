@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:front/cart/cart_model.dart';
 import 'package:front/products_listing/product.dart';
+import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -32,6 +34,14 @@ class ProductCard extends StatelessWidget {
                 Text(
                   "\$ ${product.price.toStringAsFixed(2)}",
                   style: const TextStyle(color: Colors.grey),
+                ),
+                const SizedBox(height: 8),
+                ElevatedButton(
+                  onPressed: () {
+                    final cart = context.read<CartModel>();
+                    cart.add(product);
+                  },
+                  child: const Text("Add to Cart"),
                 ),
               ],
             ),
