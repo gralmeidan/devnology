@@ -1,25 +1,19 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
+import 'package:front/cart/cart.dart';
 import 'package:front/products_listing/product.dart';
 
 class CartModel extends ChangeNotifier {
-  final List<Product> _products = [];
-  double _totalPrice = 0;
+  final Cart _cart = Cart({});
 
-  UnmodifiableListView<Product> get products => UnmodifiableListView(_products);
-
-  double get totalPrice => _totalPrice;
+  UnmodifiableCart get cart => UnmodifiableCart(_cart);
 
   void add(Product product) {
-    _products.add(product);
-    _totalPrice += product.price;
+    _cart.add(product);
     notifyListeners();
   }
 
   void remove(Product product) {
-    _products.remove(product);
-    _totalPrice -= product.price;
+    _cart.remove(product);
     notifyListeners();
   }
 }
