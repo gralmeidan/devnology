@@ -1,13 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:front/products_listing/product.dart';
+import 'package:front/products_listing/product_service.dart';
 
-class ProductsListingView extends StatelessWidget {
+class ProductsListingView extends StatefulWidget {
   const ProductsListingView({super.key});
 
   @override
+  State<ProductsListingView> createState() => _ProductsListingView();
+}
+
+class _ProductsListingView extends State<ProductsListingView> {
+  late Future<List<Product>> futureList;
+
+  @override
+  void initState() {
+    super.initState();
+    futureList = const ProductService().fetchAll();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text('Salve!'),
+        child: FutureBuilder(
+          future: futureList,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Text(snapshot.data![0].name);
+            } else if (snapshot.hasError) {
+              return Text("$snapshot.error");
+            }
+
+            return const CircularProgressIndicator();
+          },
+        ),
       ),
     );
   }

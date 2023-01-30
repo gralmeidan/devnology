@@ -9,8 +9,9 @@ class ProductService {
         "http://616d6bdb6dacbb001794ca17.mockapi.io/devnology/european_provider"));
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body)
-          .map((p) => Product.fromEuropeanProvider(p));
+      return (jsonDecode(response.body) as List<dynamic>)
+          .map((p) => Product.fromEuropeanProvider(p))
+          .toList();
     }
 
     throw Exception("Failed to fetch from European Provider");
@@ -21,8 +22,9 @@ class ProductService {
         "http://616d6bdb6dacbb001794ca17.mockapi.io/devnology/brazilian_provider"));
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body)
-          .map((p) => Product.fromBrazilianProvider(p));
+      return (jsonDecode(response.body) as List<dynamic>)
+          .map((p) => Product.fromBrazilianProvider(p))
+          .toList();
     }
 
     throw Exception("Failed to fetch from Brazilian Provider");
@@ -36,4 +38,6 @@ class ProductService {
 
     return products.expand((p) => p).toList();
   }
+
+  const ProductService();
 }

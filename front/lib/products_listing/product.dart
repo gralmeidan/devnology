@@ -23,23 +23,24 @@ class Product {
 
   Product.fromEuropeanProvider(Map<String, dynamic> json)
       : this(
-            id: json["id"],
+            id: int.parse(json["id"]),
             name: json["name"],
-            thumb: json["gallery"]["1"],
+            thumb: json["gallery"][1],
             description: json["description"],
-            price: json["price"],
+            price: double.parse(json["price"]),
             hasDiscount: json["hasDiscount"],
-            gallery: json["gallery"],
-            discountValue: json["discountValue"],
+            gallery: // I don't know why but type assertions didn't work here.
+                json["gallery"].map<String>((item) => item.toString()).toList(),
+            discountValue: double.parse(json["discountValue"]),
             tags: [json["details"]["adjective"], json["details"]["material"]]);
 
   Product.fromBrazilianProvider(Map<String, dynamic> json)
       : this(
-            id: json["id"],
+            id: int.parse(json["id"]),
             name: json["nome"],
             thumb: json["imagem"],
             description: json["descricao"],
-            price: json["preco"],
+            price: double.parse(json["preco"]),
             gallery: [json["imagem"]],
             tags: [json["material"], json["departamento"], json["categoria"]]);
 
