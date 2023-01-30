@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/products_listing/product.dart';
+import 'package:front/products_listing/product_card.dart';
 import 'package:front/products_listing/product_service.dart';
 
 class ProductsListingView extends StatefulWidget {
@@ -26,7 +27,9 @@ class _ProductsListingView extends State<ProductsListingView> {
           future: futureList,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return Text(snapshot.data![0].name);
+              return ListView.builder(itemBuilder: (context, index) {
+                return ProductCard(product: snapshot.data![index]);
+              });
             } else if (snapshot.hasError) {
               return Text("$snapshot.error");
             }
