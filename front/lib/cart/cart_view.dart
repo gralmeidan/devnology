@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/cart/cart_model.dart';
+import 'package:front/cart/cart_product_card.dart';
 import 'package:front/navigation/navigation_appbar_view.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +19,10 @@ class CartView extends StatelessWidget {
             return ListView.builder(
               itemCount: cart.cart.products.length,
               itemBuilder: (context, index) {
-                return Text(cart.cart.products[index].name);
+                final product = cart.cart.products[index];
+                return CartProductCard(
+                  product: product,
+                );
               },
             );
           },
