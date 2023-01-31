@@ -9,7 +9,7 @@ class Cart {
 
   Cart(this._products);
 
-  UnmodifiableSetView<Product> get products => UnmodifiableSetView(_products);
+  UnmodifiableListView<Product> get products => UnmodifiableListView(_products);
   UnmodifiableMapView<int, int> get quantities =>
       UnmodifiableMapView(_quantities);
   double get totalPrice => _totalPrice;
