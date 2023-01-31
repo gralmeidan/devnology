@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/cart/cart_model.dart';
+import 'package:front/cart/cart_view.dart';
 import 'package:front/products_listing/products_listing_view.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +19,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/': (context) => const ProductsListingView(),
+        '/cart': (cart) => const CartView()
       },
     );
   }
