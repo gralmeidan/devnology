@@ -28,10 +28,13 @@ const INVALID_VALUES = [
   { ...input, email: 'string' },
 ];
 
+const token = 'TOKEN';
+
 const userMocks = {
   input,
   output,
   INVALID_VALUES,
+  token,
 };
 
 export default userMocks;
