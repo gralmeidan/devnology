@@ -1,5 +1,6 @@
 import * as express from 'express';
 import morgan = require('morgan');
+import handleError from './middlewares/handleError.middleware';
 
 class App {
   public app: express.Express;
@@ -8,6 +9,8 @@ class App {
     this.app = express();
 
     this.config();
+
+    this.app.use(handleError);
   }
 
   private config(): void {
