@@ -60,8 +60,7 @@ describe('Unit tests for UserController', () => {
       await controller.signIn(req, res);
 
       expect(service.findByEmailAndPassword).to.have.been.calledWith(
-        userMock.input.email,
-        userMock.input.password
+        userMock.input
       );
       expect(res.status).to.have.been.calledWith(200);
       expect(res.json).to.have.been.calledWith(userMock.output);
@@ -77,16 +76,6 @@ describe('Unit tests for UserController', () => {
         'auth_token',
         userMock.token,
         Sinon.match.hasOwn('expires')
-      );
-    });
-
-    it('Should not throw when the body is undefined', async () => {
-      const { req, res } = mockExpressParams({ body: undefined });
-
-      await expect(controller.signIn(req, res)).not.to.be.rejected;
-      expect(service.findByEmailAndPassword).to.have.been.calledWith(
-        undefined,
-        undefined
       );
     });
   });

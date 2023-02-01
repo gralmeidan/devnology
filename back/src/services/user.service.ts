@@ -1,6 +1,6 @@
 import User from '../types/user.type';
 import UserRepository from '../repositories/user.repository';
-import { newUserSchema } from './schemas/user.schema';
+import { newUserSchema, signInSchema } from './schemas/user.schema';
 import validateSchema from './schemas/utils/validateSchema';
 import * as bcrypt from 'bcrypt';
 import RestError from '../errors/rest.error';
@@ -20,9 +20,12 @@ export default class UserService {
   }
 
   public async findByEmailAndPassword(
-    email: string,
-    password: string
+    obj: Pick<User, 'email' | 'password'>
   ): Promise<Omit<User, 'password'>> {
+    const { email, password } = validateSchema<
+      Pick<User, 'email' | 'password'>
+    >(signInSchema, obj);
+
     const user = await this.findByEmail(email);
     const isValidPassword = await bcrypt.compare(password, user.password);
 

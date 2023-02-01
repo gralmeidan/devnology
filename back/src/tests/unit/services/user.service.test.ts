@@ -73,11 +73,13 @@ describe('Unit tests for UserService', () => {
       });
     });
 
+    const signInInput = {
+      email: userMock.input.email,
+      password: userMock.input.password,
+    };
+
     it('Should return the user', async () => {
-      const response = await service.findByEmailAndPassword(
-        userMock.input.email,
-        userMock.input.password
-      );
+      const response = await service.findByEmailAndPassword(signInInput);
 
       expect(response).to.deep.equal(userMock.output);
     });
@@ -86,10 +88,7 @@ describe('Unit tests for UserService', () => {
       (bcrypt.compare as Sinon.SinonStub).resolves(false);
 
       const err = await expect(
-        service.findByEmailAndPassword(
-          userMock.input.email,
-          userMock.input.password
-        )
+        service.findByEmailAndPassword(signInInput)
       ).to.be.rejectedWith(RestError);
 
       expect(err.status).to.equal(401);
@@ -100,14 +99,26 @@ describe('Unit tests for UserService', () => {
       repository.findByEmail.resolves(undefined);
 
       const err = await expect(
-        service.findByEmailAndPassword(
-          userMock.input.email,
-          userMock.input.password
-        )
+        service.findByEmailAndPassword(signInInput)
       ).to.be.rejectedWith(RestError);
 
       expect(err.status).to.equal(404);
       expect(err.message).to.equal('User not found!');
+    });
+
+    it('Should throw an error when email or password are undefined', async () => {
+      const INVALID_VALUES = [
+        { ...signInInput, email: undefined },
+        { ...signInInput, password: undefined },
+      ];
+
+      for (const value of INVALID_VALUES) {
+        const err = await expect(
+          service.findByEmailAndPassword(value as any)
+        ).to.be.rejectedWith(RestError);
+
+        expect(err.status).to.equal(422);
+      }
     });
   });
 });

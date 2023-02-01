@@ -21,10 +21,7 @@ export default class UserController {
   };
 
   public signIn = async (req: Request, res: Response) => {
-    const response = await this.service.findByEmailAndPassword(
-      req.body?.email,
-      req.body?.password
-    );
+    const response = await this.service.findByEmailAndPassword(req.body);
     const token = generateToken(response);
 
     res.cookie('auth_token', token, this.cookieOptions());
