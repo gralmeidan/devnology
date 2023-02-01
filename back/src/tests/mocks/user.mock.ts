@@ -30,11 +30,17 @@ const INVALID_VALUES = [
 
 const token = 'TOKEN';
 
+const signInInput = {
+  email: input.email,
+  password: input.password,
+};
+
 const userMocks = {
   input,
   output,
   INVALID_VALUES,
   token,
+  signInInput,
 };
 
 export default userMocks;

@@ -73,13 +73,10 @@ describe('Unit tests for UserService', () => {
       });
     });
 
-    const signInInput = {
-      email: userMock.input.email,
-      password: userMock.input.password,
-    };
-
     it('Should return the user', async () => {
-      const response = await service.findByEmailAndPassword(signInInput);
+      const response = await service.findByEmailAndPassword(
+        userMock.signInInput
+      );
 
       expect(response).to.deep.equal(userMock.output);
     });
@@ -88,7 +85,7 @@ describe('Unit tests for UserService', () => {
       (bcrypt.compare as Sinon.SinonStub).resolves(false);
 
       const err = await expect(
-        service.findByEmailAndPassword(signInInput)
+        service.findByEmailAndPassword(userMock.signInInput)
       ).to.be.rejectedWith(RestError);
 
       expect(err.status).to.equal(401);
@@ -99,7 +96,7 @@ describe('Unit tests for UserService', () => {
       repository.findByEmail.resolves(undefined);
 
       const err = await expect(
-        service.findByEmailAndPassword(signInInput)
+        service.findByEmailAndPassword(userMock.signInInput)
       ).to.be.rejectedWith(RestError);
 
       expect(err.status).to.equal(404);
@@ -108,8 +105,8 @@ describe('Unit tests for UserService', () => {
 
     it('Should throw an error when email or password are undefined', async () => {
       const INVALID_VALUES = [
-        { ...signInInput, email: undefined },
-        { ...signInInput, password: undefined },
+        { ...userMock.signInInput, email: undefined },
+        { ...userMock.signInInput, password: undefined },
       ];
 
       for (const value of INVALID_VALUES) {
