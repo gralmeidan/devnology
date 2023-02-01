@@ -17,14 +17,20 @@ describe('Unit tests for UserService', () => {
       ...userMock.output,
       password: 'senha123',
     }),
+    findByEmail: Sinon.stub().resolves({
+      ...userMock.output,
+      password: 'HashPassword',
+    }),
   } as any;
 
   beforeEach(() => {
     Sinon.stub(bcrypt, 'hash').resolves('HashPassword');
+    Sinon.stub(bcrypt, 'compare').resolves(true);
   });
 
   afterEach(() => {
     (bcrypt.hash as Sinon.SinonStub).restore();
+    (bcrypt.compare as Sinon.SinonStub).restore();
     repository.insert.resetHistory();
   });
 
@@ -49,6 +55,45 @@ describe('Unit tests for UserService', () => {
 
         expect(err.status).to.equal(422);
       }
+    });
+  });
+
+  describe('Tests UserService.findByEmailAndPassword', () => {
+    it('Should return the user', async () => {
+      const response = await service.findByEmailAndPassword(
+        userMock.input.email,
+        userMock.input.password
+      );
+
+      expect(response).to.deep.equal(userMock.output);
+    });
+
+    it('Should throw an error when the password is invalid', async () => {
+      (bcrypt.compare as Sinon.SinonStub).resolves(false);
+
+      const err = await expect(
+        service.findByEmailAndPassword(
+          userMock.input.email,
+          userMock.input.password
+        )
+      ).to.be.rejectedWith(RestError);
+
+      expect(err.status).to.equal(401);
+      expect(err.message).to.equal('Invalid password!');
+    });
+
+    it('Should throw an error when the user is not found', async () => {
+      repository.findByEmail.resolves(undefined);
+
+      const err = await expect(
+        service.findByEmailAndPassword(
+          userMock.input.email,
+          userMock.input.password
+        )
+      ).to.be.rejectedWith(RestError);
+
+      expect(err.status).to.equal(404);
+      expect(err.message).to.equal('User not found!');
     });
   });
 });
