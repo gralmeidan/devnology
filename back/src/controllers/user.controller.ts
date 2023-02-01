@@ -1,6 +1,7 @@
 import { CookieOptions, Request, Response } from 'express';
 import UserService from '../services/user.service';
 import generateToken from '../auth/generateToken';
+import HTTP_STATUS from 'http-status-codes';
 
 export default class UserController {
   constructor(protected service = new UserService()) {}
@@ -14,8 +15,19 @@ export default class UserController {
   public signUp = async (req: Request, res: Response) => {
     const response = await this.service.insert(req.body);
     const token = generateToken(response);
-    res.cookie('auth_token', token, this.cookieOptions());
 
-    res.status(201).json(response);
+    res.cookie('auth_token', token, this.cookieOptions());
+    res.status(HTTP_STATUS.CREATED).json(response);
+  };
+
+  public signIn = async (req: Request, res: Response) => {
+    const response = await this.service.findByEmailAndPassword(
+      req.body?.email,
+      req.body?.password
+    );
+    const token = generateToken(response);
+
+    res.cookie('auth_token', token, this.cookieOptions());
+    res.status(HTTP_STATUS.OK).json(response);
   };
 }
