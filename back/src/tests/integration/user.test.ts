@@ -14,11 +14,13 @@ describe('Test routes related to the User entity', () => {
       ...userMock.output,
       password: 'exposedPassword',
     } as any);
+    Sinon.stub(UserModel, 'findOne').resolves();
     Sinon.stub(jwt, 'sign').returns(userMock.token as any);
   });
 
   afterEach(() => {
     (UserModel.create as Sinon.SinonStub).restore();
+    (UserModel.findOne as Sinon.SinonStub).restore();
     (jwt.sign as Sinon.SinonStub).restore();
   });
 

@@ -12,18 +12,14 @@ chai.use(chaiAsPromised);
 const { expect } = chai;
 
 describe('Unit tests for UserService', () => {
-  const repository = {
-    insert: Sinon.stub().resolves({
-      ...userMock.output,
-      password: 'senha123',
-    }),
-    findByEmail: Sinon.stub().resolves({
-      ...userMock.output,
-      password: 'HashPassword',
-    }),
-  } as any;
+  const repository = {} as any;
 
   beforeEach(() => {
+    repository.insert = Sinon.stub().resolves({
+      ...userMock.output,
+      password: 'senha123',
+    });
+    repository.findByEmail = Sinon.stub().resolves();
     Sinon.stub(bcrypt, 'hash').resolves('HashPassword');
     Sinon.stub(bcrypt, 'compare').resolves(true);
   });
@@ -31,6 +27,7 @@ describe('Unit tests for UserService', () => {
   afterEach(() => {
     (bcrypt.hash as Sinon.SinonStub).restore();
     (bcrypt.compare as Sinon.SinonStub).restore();
+    repository.findByEmail.resetHistory();
     repository.insert.resetHistory();
   });
 
@@ -56,9 +53,26 @@ describe('Unit tests for UserService', () => {
         expect(err.status).to.equal(422);
       }
     });
+
+    it('Should throw an error if the email is already registered', async () => {
+      repository.findByEmail.resolves(userMock.output);
+
+      const err = await expect(
+        service.insert(userMock.input)
+      ).to.be.rejectedWith(RestError);
+
+      expect(err.status).to.equal(409, 'Email already registered!');
+    });
   });
 
   describe('Tests UserService.findByEmailAndPassword', () => {
+    beforeEach(() => {
+      repository.findByEmail.resolves({
+        ...userMock.output,
+        password: 'HashPassword',
+      });
+    });
+
     it('Should return the user', async () => {
       const response = await service.findByEmailAndPassword(
         userMock.input.email,

@@ -42,6 +42,12 @@ export default class UserService {
     const value = validateSchema<User>(newUserSchema, obj);
     const password = await bcrypt.hash(value.password, 10);
 
+    const user = await this.repository.findByEmail(value.email);
+
+    if (user) {
+      throw new RestError(HTTP_STATUS.CONFLICT, 'Email already registered!');
+    }
+
     const resp = await this.repository.insert({
       ...value,
       password,
