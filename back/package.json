@@ -7,7 +7,7 @@
     "start": "npm run build && node ./dist/server.js",
     "dev": "tsnd ./src/server.ts",
     "build": "tsc",
-    "test": "mocha --require ts-node/register ./src/tests/**/*.test.ts",
+    "test": "mocha --require ts-node/register $(find . -name '*.test.ts')",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
     "test-coverage": "nyc npm test"
