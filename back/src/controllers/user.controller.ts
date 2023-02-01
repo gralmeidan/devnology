@@ -14,7 +14,6 @@ export default class UserController {
   public signUp = async (req: Request, res: Response) => {
     const response = await this.service.insert(req.body);
     const token = generateToken(response);
-
     res.cookie('auth_token', token, this.cookieOptions());
 
     res.status(201).json(response);
