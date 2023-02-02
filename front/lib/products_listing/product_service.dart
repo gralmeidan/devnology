@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class ProductService {
   Future<List<Product>> _fetchAllEuropean() async {
     final response = await http.get(Uri.parse(
-        "http://616d6bdb6dacbb001794ca17.mockapi.io/devnology/european_provider"));
+        'http://616d6bdb6dacbb001794ca17.mockapi.io/devnology/european_provider'));
 
     if (response.statusCode == 200) {
       return (jsonDecode(response.body) as List<dynamic>)
@@ -14,12 +14,12 @@ class ProductService {
           .toList();
     }
 
-    throw Exception("Failed to fetch from European Provider");
+    throw Exception('Failed to fetch from European Provider');
   }
 
   Future<List<Product>> _fetchAllBrazilian() async {
     final response = await http.get(Uri.parse(
-        "http://616d6bdb6dacbb001794ca17.mockapi.io/devnology/brazilian_provider"));
+        'http://616d6bdb6dacbb001794ca17.mockapi.io/devnology/brazilian_provider'));
 
     if (response.statusCode == 200) {
       return (jsonDecode(response.body) as List<dynamic>)
@@ -27,7 +27,7 @@ class ProductService {
           .toList();
     }
 
-    throw Exception("Failed to fetch from Brazilian Provider");
+    throw Exception('Failed to fetch from Brazilian Provider');
   }
 
   Future<List<Product>> fetchAll() async {

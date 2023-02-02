@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/auth/user.service.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
@@ -59,12 +60,11 @@ class _SignInFormState extends State<SignInForm> {
             margin: const EdgeInsets.symmetric(vertical: 10.0),
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing Data')),
-                  );
+                  await UserService.signIn(
+                      email: _email!, password: _password!);
                 }
               },
               child: const Text('Enviar'),
