@@ -24,6 +24,8 @@ class App {
         'GET,POST,DELETE,OPTIONS,PUT,PATCH'
       );
       res.header('Access-Control-Allow-Headers', '*');
+      res.header('Access-Control-Expose-Headers', '*');
+      res.header('Access-Control-Allow-Credentials', 'true');
       next();
     };
 
