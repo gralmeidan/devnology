@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/auth/sign_in_form.dart';
 
 class SignInView extends StatelessWidget {
   const SignInView({super.key});
@@ -10,7 +11,12 @@ class SignInView extends StatelessWidget {
       body: const Center(
         child: SizedBox(
           width: 400,
-          child: Card(child: Placeholder()),
+          child: Card(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: SignInForm(),
+            ),
+          ),
         ),
       ),
     );
