@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/auth/sign_in_view.dart';
 import 'package:front/cart/cart_model.dart';
 import 'package:front/cart/cart_view.dart';
 import 'package:front/products_listing/products_listing_view.dart';
@@ -19,7 +20,8 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => const ProductsListingView(),
+        '/': (context) => const SignInView(),
+        '/products': (context) => const ProductsListingView(),
         '/cart': (cart) => const CartView()
       },
     );
