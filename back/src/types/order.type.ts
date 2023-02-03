@@ -1,14 +1,10 @@
-type Order = {
+import Product, { ProductInput } from './product.type';
+
+type Order<T extends Product | ProductInput | never = never> = {
   id: number;
   userId: number;
   totalPrice: number;
-  products?: [
-    {
-      id: number;
-      quantity: number;
-      provider: { id: number; name: string };
-    }
-  ];
+  products?: T[];
 };
 
 export default Order;
