@@ -1,5 +1,7 @@
 import { Model, INTEGER, DECIMAL } from 'sequelize';
 import db from '.';
+import UserModel from './user.model';
+import OrderProduct from './orderProduct.model';
 
 class OrderModel extends Model {
   declare id: number;
@@ -26,5 +28,20 @@ OrderModel.init(
     timestamps: false,
   }
 );
+
+UserModel.hasMany(OrderModel, {
+  foreignKey: 'userId',
+  as: 'orders',
+});
+
+OrderModel.belongsTo(UserModel, {
+  foreignKey: 'userId',
+  as: 'user',
+});
+
+OrderModel.hasMany(OrderProduct, {
+  foreignKey: 'orderId',
+  as: 'products',
+});
 
 export default OrderModel;
