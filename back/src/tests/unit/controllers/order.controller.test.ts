@@ -15,10 +15,12 @@ const { expect } = chai;
 describe('Unit tests for OrderController', () => {
   const service = {
     placeOrder: Sinon.stub().resolves(orderMocks.createOutput),
+    findByUser: Sinon.stub().resolves(orderMocks.arrOutput),
   } as any;
 
   afterEach(() => {
     service.placeOrder.resetHistory();
+    service.findByUser.resetHistory();
   });
 
   const controller = new OrderController(service);
@@ -44,6 +46,28 @@ describe('Unit tests for OrderController', () => {
       const { req, res } = mockExpressParams({ body: orderMocks.input });
 
       expect(controller.placeOrder(req, res)).to.be.rejectedWith(
+        new Error('User was not provided!')
+      );
+    });
+  });
+
+  describe('Tests OrderController.getOrdersByRequestingUser', () => {
+    it('Should return an array of orders', async () => {
+      const { req, res } = mockExpressParams({
+        user: userMock.output,
+      });
+
+      await controller.getOrdersByRequestingUser(req, res);
+
+      expect(service.findByUser).to.have.been.calledWith(userMock.output.id);
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(orderMocks.arrOutput);
+    });
+
+    it('Should throw an error if the user is not provided', async () => {
+      const { req, res } = mockExpressParams();
+
+      expect(controller.getOrdersByRequestingUser(req, res)).to.be.rejectedWith(
         new Error('User was not provided!')
       );
     });

@@ -70,7 +70,7 @@ export default class OrderService {
     return result;
   }
 
-  public async findByUser(userId: number) {
+  public async findByUser(userId: number | unknown) {
     const value = validateSchema<number>(utilsSchema.id, userId);
     return this.orderRepository.findByUser(value);
   }
