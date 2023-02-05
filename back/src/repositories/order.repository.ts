@@ -1,4 +1,4 @@
-import OrderProduct from '../database/models/orderProduct.model';
+import OrderProductModel from '../database/models/orderProduct.model';
 import ProviderModel from '../database/models/provider.model';
 import { FindOptions, Transaction } from 'sequelize';
 import Order from '../types/order.type';
@@ -7,7 +7,7 @@ import OrderModel from '../database/models/order.model';
 export default class OrderRepository {
   private defaultFindOptions: FindOptions = {
     include: {
-      model: OrderProduct,
+      model: OrderProductModel,
       as: 'products',
       attributes: [['product_id', 'id'], 'quantity'],
       include: [

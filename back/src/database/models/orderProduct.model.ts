@@ -2,14 +2,14 @@ import { Model, INTEGER } from 'sequelize';
 import db from '.';
 import ProviderModel from './provider.model';
 
-class OrderProduct extends Model {
+class OrderProductModel extends Model {
   declare orderId: number;
   declare productId: number;
   declare providerId: number;
   declare quantity: number;
 }
 
-OrderProduct.init(
+OrderProductModel.init(
   {
     orderId: {
       type: INTEGER,
@@ -37,9 +37,9 @@ OrderProduct.init(
   }
 );
 
-OrderProduct.belongsTo(ProviderModel, {
+OrderProductModel.belongsTo(ProviderModel, {
   foreignKey: 'providerId',
   as: 'provider',
 });
 
-export default OrderProduct;
+export default OrderProductModel;
