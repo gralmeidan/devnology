@@ -9,7 +9,7 @@ export default function mockExpressParams(req = {}) {
   res.status = Sinon.stub().returns(res);
 
   return {
-    req: req as Request,
+    req: req as Request & { user?: Record<string, unknown> },
     res: res as Response,
     next: Sinon.stub() as unknown as NextFunction,
   };
