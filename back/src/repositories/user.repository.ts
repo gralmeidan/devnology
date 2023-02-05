@@ -2,12 +2,6 @@ import User from '../types/user.type';
 import UserModel from '../database/models/user.model';
 
 export default class UserRepository {
-  private defaultOptions = {
-    attributes: {
-      exclude: ['password'],
-    },
-  };
-
   public insert(obj: Omit<User, 'id'>) {
     return UserModel.create({
       firstName: obj.firstName,

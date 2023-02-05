@@ -24,6 +24,7 @@ describe('Unit tests for OrderService', () => {
     orderProductRepository.findByIds = Sinon.stub().resolves(undefined);
     orderRepository.insert = Sinon.stub().resolves(orderMocks.createOutput);
     providerRepository.findByName = Sinon.stub().resolves(providerMocks.output);
+    orderRepository.findByUser = Sinon.stub().resolves(orderMocks.arrOutput);
     Sinon.stub(db, 'transaction').callsFake((async (callback: Function) => {
       return callback(TRANSACTION);
     }) as any);
@@ -98,6 +99,26 @@ describe('Unit tests for OrderService', () => {
 
       expect(err.status).to.equal(409);
       expect(err.message).to.equal('Duplicated product in Order!');
+    });
+  });
+
+  describe('Tests OrderService.findByUser', () => {
+    it('Should return an array of orders', async () => {
+      const response = await service.findByUser(1);
+
+      expect(response).to.deep.equal(orderMocks.arrOutput);
+      expect(orderRepository.findByUser).to.have.been.calledWith(1);
+    });
+
+    it('Should throw an error when receiving an invalid value', async () => {
+      const INVALID_VALUES = [undefined, 0, -1, 2.2, 'a', NaN, null];
+      for (const value of INVALID_VALUES) {
+        const err = await expect(
+          service.findByUser(value as any)
+        ).to.be.rejectedWith(RestError);
+
+        expect(err.status).to.equal(422);
+      }
     });
   });
 });

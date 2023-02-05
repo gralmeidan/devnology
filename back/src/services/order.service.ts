@@ -9,6 +9,7 @@ import RestError from '../errors/rest.error';
 import validateSchema from './schemas/utils/validateSchema';
 import { newOrderSchema } from './schemas/order.schema';
 import { Transaction } from 'sequelize';
+import utilsSchema from './schemas/utils/utils.schema';
 
 export default class OrderService {
   constructor(
@@ -67,5 +68,10 @@ export default class OrderService {
     });
 
     return result;
+  }
+
+  public async findByUser(userId: number) {
+    const value = validateSchema<number>(utilsSchema.id, userId);
+    return this.orderRepository.findByUser(value);
   }
 }

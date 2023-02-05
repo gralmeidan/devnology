@@ -1,5 +1,5 @@
 import Order from '../../types/order.type';
-import { ProductInput } from '../../types/product.type';
+import Product, { ProductInput } from '../../types/product.type';
 import productMocks from './product.mock';
 
 const input: Required<Omit<Order<ProductInput>, 'id'>> = {
@@ -31,10 +31,30 @@ const INVALID_VALUES = [
   })),
 ];
 
+const output: Order<Product> = {
+  id: 1,
+  userId: 1,
+  totalPrice: 20,
+  products: [
+    {
+      id: 1,
+      quantity: 1,
+      provider: { id: 1, name: 'brazilian_provider' },
+    },
+    {
+      id: 1,
+      quantity: 2,
+      provider: { id: 2, name: 'european_provider' },
+    },
+  ],
+};
+
 const orderMocks = {
   input,
   createOutput,
   INVALID_VALUES,
+  output,
+  arrOutput: Array(3).fill(output),
 };
 
 export default orderMocks;
