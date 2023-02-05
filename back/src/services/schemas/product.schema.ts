@@ -1,9 +1,10 @@
 import * as Joi from 'joi';
+import utilsSchema from './utils/utils.schema';
 
 const productSchema = {
-  id: Joi.number().min(1).required(),
-  quantity: Joi.number().min(1).required(),
-  provider: Joi.string().required(),
+  id: utilsSchema.id,
+  quantity: utilsSchema.int.min(1),
+  provider: utilsSchema.str,
 };
 
 const productInputSchema = Joi.object(productSchema);

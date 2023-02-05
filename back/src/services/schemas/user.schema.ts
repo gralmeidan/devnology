@@ -1,13 +1,11 @@
 import * as Joi from 'joi';
+import utilsSchema from './utils/utils.schema';
 
 const userSchema = {
-  firstName: Joi.string().max(255).required(),
-  lastName: Joi.string().max(255).required(),
-  password: Joi.string().max(255).required(),
-  email: Joi.string()
-    .max(255)
-    .pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
-    .required(),
+  firstName: utilsSchema.str,
+  lastName: utilsSchema.str,
+  password: utilsSchema.str,
+  email: utilsSchema.str.pattern(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/),
 };
 
 const signInSchema = Joi.object({
