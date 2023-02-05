@@ -9,5 +9,6 @@ const controller = new OrderController();
 orderRouter.use(cookieParser());
 orderRouter.use(validateToken);
 orderRouter.post('/', controller.placeOrder);
+orderRouter.get('/', controller.getOrdersByRequestingUser);
 
 export default orderRouter;
