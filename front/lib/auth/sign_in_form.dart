@@ -13,6 +13,20 @@ class _SignInFormState extends State<SignInForm> {
   String? _email;
   String? _password;
 
+  void _submit() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      await UserService.signIn(
+        email: _email!,
+        password: _password!,
+      );
+
+      if (context.mounted) {
+        Navigator.of(context).pushNamed('/products');
+      }
+    }
+  }
+
   String? _validateEmail(String? value) {
     final regexEmail = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
@@ -46,6 +60,9 @@ class _SignInFormState extends State<SignInForm> {
               validator: _validateEmail,
               onSaved: (value) => _email = value,
               decoration: const InputDecoration(labelText: 'E-mail'),
+              onEditingComplete: () {
+                FocusScope.of(context).nextFocus();
+              },
             ),
           ),
           SizedBox(
@@ -55,25 +72,14 @@ class _SignInFormState extends State<SignInForm> {
               validator: _validatePassword,
               onSaved: (value) => _password = value,
               decoration: const InputDecoration(labelText: 'Senha'),
+              onEditingComplete: _submit,
             ),
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10.0),
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () async {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                  await UserService.signIn(
-                    email: _email!,
-                    password: _password!,
-                  );
-
-                  if (context.mounted) {
-                    Navigator.of(context).pushNamed('/products');
-                  }
-                }
-              },
+              onPressed: _submit,
               child: const Text('Enviar'),
             ),
           )
