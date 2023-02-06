@@ -7,7 +7,7 @@ export default function handleError(
   res: Response,
   _next: NextFunction
 ) {
-  if (err instanceof RestError) {
+  if ('status' in err) {
     return res.status(err.status).json({
       message: err.message,
     });

@@ -18,8 +18,11 @@ describe('Tests handleError.middleware', () => {
     (console.log as Sinon.SinonStub).restore();
   });
 
-  it('Should return the error and the custom message if receiving a RestError', () => {
-    const err = new RestError(404, 'Product not found');
+  it('Should return the error and the custom message if receiving any error with a status', () => {
+    const err = {
+      status: 404,
+      message: 'User not found!',
+    } as RestError;
     const { req, res, next } = mockExpressParams();
 
     handleError(err, req, res, next);
