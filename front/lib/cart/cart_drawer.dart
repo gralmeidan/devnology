@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/cart/cart_model.dart';
 import 'package:front/cart/cart_product_card.dart';
+import 'package:front/utils/formatter.dart';
 import 'package:provider/provider.dart';
 
 class CartDrawer extends StatelessWidget {
@@ -14,7 +15,7 @@ class CartDrawer extends StatelessWidget {
       child: Column(
         children: [
           Align(
-            alignment: Alignment.topLeft,
+            alignment: Alignment.topRight,
             child: IconButton(
               icon: const Icon(Icons.close),
               onPressed: () {
@@ -39,6 +40,27 @@ class CartDrawer extends StatelessWidget {
               );
             },
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Consumer<CartModel>(
+                  builder: (context, cart, child) {
+                    return Text(
+                      Formatter.money(cart.cart.totalPrice),
+                      style: const TextStyle(fontSize: 18),
+                    );
+                  },
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.shopping_cart_checkout),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
