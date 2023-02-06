@@ -18,4 +18,12 @@ export default class UserRepository {
       },
     });
   }
+
+  public findById(id: number) {
+    return UserModel.findByPk(id, {
+      attributes: {
+        exclude: ['password'],
+      },
+    });
+  }
 }
