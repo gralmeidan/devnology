@@ -13,7 +13,7 @@ class User {
 
   User.fromJson(Map<String, dynamic> json)
       : this(
-          id: int.parse(json["id"]),
+          id: json["id"],
           firstName: json["firstName"],
           lastName: json["lastName"],
           email: json["email"],

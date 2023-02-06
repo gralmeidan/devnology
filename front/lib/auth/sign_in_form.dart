@@ -64,7 +64,13 @@ class _SignInFormState extends State<SignInForm> {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
                   await UserService.signIn(
-                      email: _email!, password: _password!);
+                    email: _email!,
+                    password: _password!,
+                  );
+
+                  if (context.mounted) {
+                    Navigator.of(context).pushNamed('/products');
+                  }
                 }
               },
               child: const Text('Enviar'),
