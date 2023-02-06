@@ -55,7 +55,9 @@ class CartDrawer extends StatelessWidget {
                   },
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/checkout');
+                  },
                   icon: const Icon(Icons.shopping_cart_checkout),
                 ),
               ],
