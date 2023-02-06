@@ -22,7 +22,7 @@ class NavigationAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: const EdgeInsets.only(right: 20),
           child: IconButton(
             onPressed: () {
-              Navigator.of(context).pushNamed('/cart');
+              Scaffold.of(context).openEndDrawer();
             },
             icon: const Icon(
               Icons.shopping_cart,

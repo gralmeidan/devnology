@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:front/cart/cart_drawer.dart';
 import 'package:front/navigation/navigation_appbar_view.dart';
 import 'package:front/products_listing/product.dart';
 import 'package:front/products_listing/product_card.dart';
@@ -24,6 +25,7 @@ class _ProductsListingView extends State<ProductsListingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: const CartDrawer(),
       appBar: const NavigationAppBar(
         title: Text('Produtos'),
       ),
