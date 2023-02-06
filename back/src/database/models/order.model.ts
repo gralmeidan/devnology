@@ -2,11 +2,12 @@ import { Model, INTEGER, DECIMAL } from 'sequelize';
 import db from '.';
 import UserModel from './user.model';
 import OrderProduct from './orderProduct.model';
+import AddressModel from './address.model';
 
 class OrderModel extends Model {
   declare id: number;
   declare userId: number;
-  declare totalPrice: number;
+  declare addressId: number;
 }
 
 OrderModel.init(
@@ -18,7 +19,7 @@ OrderModel.init(
       autoIncrement: true,
     },
     userId: INTEGER,
-    totalPrice: DECIMAL(10, 2),
+    addressId: INTEGER,
   },
   {
     underscored: true,
@@ -42,6 +43,16 @@ OrderModel.belongsTo(UserModel, {
 OrderModel.hasMany(OrderProduct, {
   foreignKey: 'orderId',
   as: 'products',
+});
+
+AddressModel.hasMany(OrderModel, {
+  foreignKey: 'addressId',
+  as: 'orders',
+});
+
+OrderModel.belongsTo(AddressModel, {
+  foreignKey: 'addressId',
+  as: 'address',
 });
 
 export default OrderModel;
