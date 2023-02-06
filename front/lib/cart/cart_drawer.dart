@@ -32,6 +32,7 @@ class CartDrawer extends StatelessWidget {
                     final product = cart.cart.products[index];
                     return CartProductCard(
                       product: product,
+                      quantity: cart.cart.quantities[product.id],
                     );
                   },
                 ),

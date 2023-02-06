@@ -4,12 +4,18 @@ import 'package:front/products_listing/product.dart';
 import 'package:provider/provider.dart';
 
 class CartProductCard extends StatelessWidget {
+  final int quantity;
   final Product product;
 
-  const CartProductCard({super.key, required this.product});
+  const CartProductCard({
+    super.key,
+    required this.product,
+    required this.quantity,
+  });
 
   @override
   Widget build(BuildContext context) {
+    const gap = 10.0;
     return Card(
       elevation: 4.0,
       margin: const EdgeInsets.all(16.0),
@@ -17,12 +23,14 @@ class CartProductCard extends StatelessWidget {
         children: [
           SizedBox(
             height: 80,
-            child: Image.network(product.thumb),
-          ),
-          SizedBox(
-            height: 80,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(gap),
+              child: Image.network(product.thumb),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(gap),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,10 +42,28 @@ class CartProductCard extends StatelessWidget {
                       fontSize: 22,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: gap),
                   Text(
                     "R\$ ${product.price.toStringAsFixed(2)}",
                   ),
+                  const SizedBox(height: gap),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () => context.read<CartModel>().add(product),
+                        icon: const Icon(Icons.add),
+                      ),
+                      const SizedBox(width: gap),
+                      Text("$quantity"),
+                      const SizedBox(width: gap),
+                      IconButton(
+                        onPressed: () =>
+                            context.read<CartModel>().remove(product),
+                        icon: const Icon(Icons.remove),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
