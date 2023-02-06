@@ -3,27 +3,37 @@ import ProviderModel from '../database/models/provider.model';
 import { FindOptions, Transaction } from 'sequelize';
 import Order from '../types/order.type';
 import OrderModel from '../database/models/order.model';
+import AddressModel from '../database/models/address.model';
 
 export default class OrderRepository {
   private defaultFindOptions: FindOptions = {
-    include: {
-      model: OrderProductModel,
-      as: 'products',
-      attributes: [['product_id', 'id'], 'quantity'],
-      include: [
-        {
-          model: ProviderModel,
-          as: 'provider',
-        },
-      ],
-    },
+    include: [
+      {
+        model: OrderProductModel,
+        as: 'products',
+        attributes: [['product_id', 'id'], 'quantity'],
+        include: [
+          {
+            model: ProviderModel,
+            as: 'provider',
+          },
+        ],
+      },
+      {
+        model: AddressModel,
+        as: 'address',
+      },
+    ],
   };
 
-  public insert(obj: Omit<Order, 'id' | 'products'>, transaction: Transaction) {
+  public insert(
+    obj: Omit<Order, 'id' | 'products' | 'address'>,
+    transaction: Transaction
+  ) {
     return OrderModel.create(
       {
         userId: obj.userId,
-        totalPrice: obj.totalPrice,
+        addressId: obj.addressId,
       },
       {
         transaction,

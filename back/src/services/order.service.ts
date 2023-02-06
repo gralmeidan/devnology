@@ -1,6 +1,6 @@
 import { ProductInput } from '../types/product.type';
 import OrderRepository from '../repositories/order.repository';
-import Order from '../types/order.type';
+import { OrderInput } from '../types/order.type';
 import db from '../database/models';
 import ProviderRepository from '../repositories/provider.repository';
 import OrderProductRepository from '../repositories/orderProduct.repository';
@@ -49,11 +49,8 @@ export default class OrderService {
     );
   }
 
-  public async placeOrder(order: Required<Omit<Order<ProductInput>, 'id'>>) {
-    const value = validateSchema<Required<Omit<Order<ProductInput>, 'id'>>>(
-      newOrderSchema,
-      order
-    );
+  public async placeOrder(order: OrderInput) {
+    const value = validateSchema<OrderInput>(newOrderSchema, order);
 
     const result = await db.transaction(async t => {
       const resp = await this.orderRepository.insert(value, t);

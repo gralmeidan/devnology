@@ -1,17 +1,18 @@
 import Order from '../../types/order.type';
 import Product, { ProductInput } from '../../types/product.type';
+import addressMocks from './address.mock';
 import productMocks from './product.mock';
 
-const input: Required<Omit<Order<ProductInput>, 'id'>> = {
+const input: Required<Omit<Order<ProductInput>, 'id' | 'address'>> = {
   userId: 1,
-  totalPrice: 42.0,
+  addressId: 2,
   products: Array(3).fill(productMocks.input),
 };
 
 const createOutput: Order = {
   id: 2,
   userId: 1,
-  totalPrice: 42.0,
+  addressId: 2,
 };
 
 const INVALID_VALUES = [
@@ -20,9 +21,10 @@ const INVALID_VALUES = [
   { ...input, userId: 0 },
   { ...input, userId: -1 },
   { ...input, userId: 2.3 },
-  { ...input, totalPrice: 'NaN' },
-  { ...input, totalPrice: undefined },
-  { ...input, totalPrice: -1 },
+  { ...input, addressId: 'NaN' },
+  { ...input, addressId: undefined },
+  { ...input, addressId: -1 },
+  { ...input, addressId: 0 },
   { ...input, products: undefined },
   { ...input, products: [] },
   ...productMocks.INVALID_VALUES.map(products => ({
@@ -34,7 +36,7 @@ const INVALID_VALUES = [
 const output: Order<Product> = {
   id: 1,
   userId: 1,
-  totalPrice: 20,
+  addressId: 1,
   products: [
     {
       id: 1,
@@ -47,6 +49,7 @@ const output: Order<Product> = {
       provider: { id: 2, name: 'european_provider' },
     },
   ],
+  address: addressMocks.output,
 };
 
 const orderMocks = {
