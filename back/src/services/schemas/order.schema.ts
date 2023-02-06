@@ -4,7 +4,7 @@ import utilsSchema from './utils/utils.schema';
 
 const orderSchema = {
   userId: utilsSchema.id,
-  totalPrice: Joi.number().positive().required(),
+  addressId: utilsSchema.id,
   products: Joi.array().items(productInputSchema).min(1).required(),
 };
 
