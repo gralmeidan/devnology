@@ -17,11 +17,15 @@ describe('Unit tests for AddressService', () => {
   const userRepository = {} as any;
 
   beforeEach(() => {
+    addressRepository.findByUser = Sinon.stub().resolves(
+      addressMocks.arrOutput
+    );
     addressRepository.insert = Sinon.stub().resolves(addressMocks.output);
     userRepository.findById = Sinon.stub().resolves(userMocks.output);
   });
 
   afterEach(() => {
+    addressRepository.findByUser.reset();
     addressRepository.insert.reset();
     userRepository.findById.reset();
   });
@@ -52,6 +56,26 @@ describe('Unit tests for AddressService', () => {
       for (const value of addressMocks.INVALID_VALUES) {
         const err = await expect(
           service.insert(value as any)
+        ).to.be.rejectedWith(RestError);
+
+        expect(err.status).to.equal(422);
+      }
+    });
+  });
+
+  describe('Tests for AddressService.findByUser', () => {
+    it('Should return an array of addresses', async () => {
+      const resp = await service.findByUser(1);
+
+      expect(resp).to.deep.equal(addressMocks.arrOutput);
+      expect(addressRepository.findByUser).to.have.been.calledOnce;
+    });
+
+    it('Should throw an error when receiving an invalid value', async () => {
+      const INVALID_VALUES = [0, -1, 'NaN', undefined];
+      for (const value of INVALID_VALUES) {
+        const err = await expect(
+          service.findByUser(value as any)
         ).to.be.rejectedWith(RestError);
 
         expect(err.status).to.equal(422);

@@ -42,6 +42,7 @@ const addressMocks = {
   output,
   input,
   INVALID_VALUES,
+  arrOutput: Array(3).fill(output),
 };
 
 export default addressMocks;

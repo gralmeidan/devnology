@@ -5,6 +5,7 @@ import validateSchema from './schemas/utils/validateSchema';
 import UserRepository from '../repositories/user.repository';
 import AddressRepository from '../repositories/address.repository';
 import { newAddressSchema } from './schemas/address.schema';
+import utilsSchema from './schemas/utils/utils.schema';
 
 export default class AddressService {
   constructor(
@@ -25,6 +26,14 @@ export default class AddressService {
 
     await this.checkIfUserExists(value.userId);
     const resp = await this.addressRepository.insert(obj);
+
+    return resp;
+  }
+
+  public async findByUser(userId: number) {
+    const value = validateSchema<number>(utilsSchema.id, userId);
+
+    const resp = await this.addressRepository.findByUser(value);
 
     return resp;
   }

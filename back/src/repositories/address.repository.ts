@@ -16,4 +16,12 @@ export default class AddressRepository {
       state: obj.state,
     });
   }
+
+  public findByUser(userId: number) {
+    return AddressModel.findAll({
+      where: {
+        userId,
+      },
+    });
+  }
 }
