@@ -10,6 +10,8 @@ import * as chai from 'chai';
 import * as Sinon from 'sinon';
 import * as jwt from 'jsonwebtoken';
 import * as request from 'supertest';
+import AddressModel from '../../database/models/address.model';
+import addressMocks from '../mocks/address.mock';
 
 const { expect } = chai;
 
@@ -24,6 +26,7 @@ describe('Test routes in /orders', () => {
     Sinon.stub(OrderModel, 'create').resolves(orderMocks.createOutput as any);
     Sinon.stub(OrderModel, 'findAll').resolves(orderMocks.arrOutput as any);
     Sinon.stub(ProviderModel, 'findOne').resolves(providerMocks.output as any);
+    Sinon.stub(AddressModel, 'findByPk').resolves(addressMocks.output as any);
     Sinon.stub(jwt, 'verify').returns(userMock.output as any);
   });
 
@@ -33,6 +36,7 @@ describe('Test routes in /orders', () => {
     (OrderModel.create as Sinon.SinonStub).restore();
     (OrderModel.findAll as Sinon.SinonStub).restore();
     (ProviderModel.findOne as Sinon.SinonStub).restore();
+    (AddressModel.findByPk as Sinon.SinonStub).restore();
     (jwt.verify as Sinon.SinonStub).restore();
   });
 

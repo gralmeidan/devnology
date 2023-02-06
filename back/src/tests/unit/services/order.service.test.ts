@@ -8,6 +8,7 @@ import db from '../../../database/models';
 import productMocks from '../../mocks/product.mock';
 import orderMocks from '../../mocks/order.mock';
 import providerMocks from '../../mocks/provider.mock';
+import addressMocks from '../../mocks/address.mock';
 
 chai.use(sinonChai);
 chai.use(chaiAsPromised);
@@ -18,6 +19,7 @@ describe('Unit tests for OrderService', () => {
   const orderRepository = {} as any;
   const orderProductRepository = {} as any;
   const providerRepository = {} as any;
+  const addressRepository = {} as any;
 
   beforeEach(() => {
     orderProductRepository.insert = Sinon.stub().resolves(productMocks.output);
@@ -25,6 +27,7 @@ describe('Unit tests for OrderService', () => {
     orderRepository.insert = Sinon.stub().resolves(orderMocks.createOutput);
     providerRepository.findByName = Sinon.stub().resolves(providerMocks.output);
     orderRepository.findByUser = Sinon.stub().resolves(orderMocks.arrOutput);
+    addressRepository.findById = Sinon.stub().resolves(addressMocks.output);
     Sinon.stub(db, 'transaction').callsFake((async (callback: Function) => {
       return callback(TRANSACTION);
     }) as any);
@@ -35,13 +38,15 @@ describe('Unit tests for OrderService', () => {
     orderProductRepository.findByIds.reset();
     orderRepository.insert.reset();
     providerRepository.findByName.reset();
+    addressRepository.findById.reset();
     (db.transaction as Sinon.SinonStub).restore();
   });
 
   const service = new OrderService(
     orderRepository,
     orderProductRepository,
-    providerRepository
+    providerRepository,
+    addressRepository
   );
 
   describe('Tests OrderService.placeOrder', () => {
@@ -52,6 +57,7 @@ describe('Unit tests for OrderService', () => {
       expect(response).to.deep.equal(orderMocks.createOutput);
       expect(orderRepository.insert).to.have.been.calledWith(orderMocks.input);
       expect(orderProductRepository.insert).to.have.been.calledThrice;
+      expect(addressRepository.findById).to.have.been.calledOnce;
     });
 
     it('Should call orderProductRepository.insert with the correct values', async () => {
@@ -88,6 +94,17 @@ describe('Unit tests for OrderService', () => {
 
       expect(err.status).to.equal(404);
       expect(err.message).to.equal('Provider not found!');
+    });
+
+    it('Should throw an error when the address does not exist', async () => {
+      addressRepository.findById.resolves(undefined);
+
+      const err = await expect(
+        service.placeOrder(orderMocks.input)
+      ).to.be.rejectedWith(RestError);
+
+      expect(err.status).to.equal(404);
+      expect(err.message).to.equal('Address not found!');
     });
 
     it('Should throw an error when the entry already exists', async () => {
