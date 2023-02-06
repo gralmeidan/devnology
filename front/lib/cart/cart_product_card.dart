@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/cart/cart_model.dart';
 import 'package:front/products_listing/product.dart';
+import 'package:front/utils/formatter.dart';
 import 'package:provider/provider.dart';
 
 class CartProductCard extends StatelessWidget {
@@ -43,9 +44,7 @@ class CartProductCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: gap),
-                  Text(
-                    "R\$ ${product.price.toStringAsFixed(2)}",
-                  ),
+                  Text(Formatter.money(product.price)),
                   const SizedBox(height: gap),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

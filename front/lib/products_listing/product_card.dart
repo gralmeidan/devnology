@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/cart/cart_model.dart';
 import 'package:front/products_listing/product.dart';
+import 'package:front/utils/formatter.dart';
 import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
@@ -32,7 +33,7 @@ class ProductCard extends StatelessWidget {
                 Text(product.description),
                 const SizedBox(height: 8),
                 Text(
-                  "R\$ ${product.price.toStringAsFixed(2)}",
+                  Formatter.money(product.price),
                   style: const TextStyle(color: Colors.grey),
                 ),
                 const SizedBox(height: 8),
