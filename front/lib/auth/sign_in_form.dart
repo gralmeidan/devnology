@@ -51,6 +51,7 @@ class _SignInFormState extends State<SignInForm> {
           SizedBox(
             height: 70,
             child: TextFormField(
+              obscureText: true,
               validator: _validatePassword,
               onSaved: (value) => _password = value,
               decoration: const InputDecoration(labelText: 'Senha'),
