@@ -27,4 +27,9 @@ class Address {
           cep: json["cep"],
           state: json["state"],
         );
+
+  @override
+  String toString() {
+    return '$state - $city, $number - $street';
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/cart/cart_listing.dart';
 import 'package:front/navigation/navigation_appbar_view.dart';
+import 'package:front/orders/checkout_form.dart';
 
 class CheckoutView extends StatelessWidget {
   const CheckoutView({super.key});
@@ -24,6 +25,7 @@ class CheckoutView extends StatelessWidget {
                 ),
               ),
               CartListing(),
+              CheckoutForm()
             ],
           ),
         ),
