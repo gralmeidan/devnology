@@ -35,6 +35,18 @@ class Cart {
 
     _totalPrice -= product.price;
   }
+
+  List toJson() {
+    return products
+        .map(
+          (e) => {
+            'id': e.id,
+            'provider': e.provider,
+            'quantity': quantities[e.id],
+          },
+        )
+        .toList();
+  }
 }
 
 class UnmodifiableCart {
@@ -45,4 +57,6 @@ class UnmodifiableCart {
   get products => cart.products;
   get quantities => cart.quantities;
   get totalPrice => cart.totalPrice;
+
+  List toJson() => cart.toJson();
 }
