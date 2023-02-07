@@ -4,7 +4,7 @@ import 'package:front/cart/cart.dart';
 import 'package:front/products_listing/product_service.dart';
 
 class CartAdapter {
-  final List<Map<String, dynamic>> entries;
+  final List<dynamic> entries;
 
   CartAdapter(this.entries);
 

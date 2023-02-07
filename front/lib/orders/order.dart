@@ -17,8 +17,9 @@ class Order {
     required this.cart,
   });
 
-  static fromJSON(Map<String, dynamic> json) async {
+  static Future<Order> fromJSON(Map<String, dynamic> json) async {
     final address = Address.fromJson(json['address']);
+    print(json['products']);
     final cart = await CartAdapter(json['products']).getCart();
 
     return Order(

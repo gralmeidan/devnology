@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:front/auth/sign_in_view.dart';
 import 'package:front/cart/cart_model.dart';
 import 'package:front/orders/checkout_view.dart';
+import 'package:front/orders/listing/orders_listing_view.dart';
 import 'package:front/products_listing/products_listing_view.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +23,8 @@ class MainApp extends StatelessWidget {
       routes: {
         '/': (context) => const SignInView(),
         '/products': (context) => const ProductsListingView(),
-        '/checkout': (context) => const CheckoutView()
+        '/checkout': (context) => const CheckoutView(),
+        '/orders': (context) => const OrdersListingView()
       },
     );
   }
