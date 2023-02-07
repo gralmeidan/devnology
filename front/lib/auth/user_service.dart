@@ -5,8 +5,10 @@ import 'package:front/auth/user.dart';
 import 'package:http/http.dart' as http;
 
 class UserService {
-  static Future<User> signIn(
-      {required String email, required String password}) async {
+  static Future<User> signIn({
+    required String email,
+    required String password,
+  }) async {
     final uri = Uri.parse('http://localhost:3001/signin');
 
     final response = await http.post(
