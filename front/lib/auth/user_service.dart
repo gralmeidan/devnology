@@ -10,12 +10,12 @@ class UserService {
     required String password,
   }) async {
     final uri = Uri.parse('http://localhost:3001/signin');
+    final client = AuthenticatedClient();
 
-    final response = await http.post(
+    final response = await client.post(
       uri,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Expose-Headers': 'set-cookie'
       },
       body: jsonEncode({
         "email": email,

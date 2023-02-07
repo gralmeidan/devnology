@@ -27,6 +27,18 @@ describe('Tests validateToken.middleware', () => {
     (getJwtSecret.getJwtSecret as Sinon.SinonStub).restore();
   });
 
+  it('Should automatically call next if the method is OPTIONS', () => {
+    const { req, res, next } = mockExpressParams({
+      method: 'OPTIONS',
+      cookies: {},
+    });
+
+    validateToken(req, res, next);
+
+    expect(next).to.have.been.calledOnce;
+    expect(jwt.verify).not.to.have.been.called;
+  });
+
   it('Should throw an error if the cookie is not passed', () => {
     const { req, res, next } = mockExpressParams({ cookies: {} });
 

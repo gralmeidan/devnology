@@ -6,7 +6,7 @@
       "request": "launch",
       "type": "dart",
       "flutterMode": "debug",
-      "args": ["-d", "chrome", "--web-renderer", "html"]
+      "args": ["-d", "chrome", "--web-renderer", "html", "--web-port", "43195"]
     }
   ]
 }

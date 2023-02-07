@@ -11,6 +11,10 @@ export default function validateToken(
 ) {
   const token = req.cookies['auth_token'];
 
+  if (req.method === 'OPTIONS') {
+    return next();
+  }
+
   if (!token) {
     throw new RestError(HTTP_STATUS.UNAUTHORIZED, 'Token not found!');
   }
