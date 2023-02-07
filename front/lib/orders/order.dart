@@ -19,7 +19,7 @@ class Order {
 
   static Future<Order> fromJSON(Map<String, dynamic> json) async {
     final address = Address.fromJson(json['address']);
-    print(json['products']);
+
     final cart = await CartAdapter(json['products']).getCart();
 
     return Order(
