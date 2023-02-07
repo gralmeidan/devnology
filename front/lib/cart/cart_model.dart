@@ -3,7 +3,7 @@ import 'package:front/cart/cart.dart';
 import 'package:front/products_listing/product.dart';
 
 class CartModel extends ChangeNotifier {
-  final Cart _cart = Cart({});
+  final Cart _cart = Cart();
 
   UnmodifiableCart get cart => UnmodifiableCart(_cart);
 

@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 class ProductService {
   Future<List<Product>> _fetchAllEuropean() async {
     final response = await http.get(Uri.parse(
-        'http://616d6bdb6dacbb001794ca17.mockapi.io/devnology/european_provider'));
+      'http://616d6bdb6dacbb001794ca17.mockapi.io/devnology/european_provider',
+    ));
 
     if (response.statusCode == 200) {
       return (jsonDecode(response.body) as List<dynamic>)
@@ -19,7 +20,8 @@ class ProductService {
 
   Future<List<Product>> _fetchAllBrazilian() async {
     final response = await http.get(Uri.parse(
-        'http://616d6bdb6dacbb001794ca17.mockapi.io/devnology/brazilian_provider'));
+      'http://616d6bdb6dacbb001794ca17.mockapi.io/devnology/brazilian_provider',
+    ));
 
     if (response.statusCode == 200) {
       return (jsonDecode(response.body) as List<dynamic>)
@@ -37,6 +39,14 @@ class ProductService {
     final products = await Future.wait([brazilianProducts, europeanProducts]);
 
     return products.expand((p) => p).toList();
+  }
+
+  static Future<Product> fetchOne(int id, String provider) async {
+    final response = await http.get(Uri.parse(
+      'http://616d6bdb6dacbb001794ca17.mockapi.io/devnology/$provider/$id',
+    ));
+
+    return Product.fromJSON(jsonDecode(response.body));
   }
 
   const ProductService();

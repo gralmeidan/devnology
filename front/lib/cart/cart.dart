@@ -3,11 +3,20 @@ import 'dart:collection';
 import 'package:front/products_listing/product.dart';
 
 class Cart {
-  final Set<Product> _products;
-  final Map<int, int> _quantities = {};
+  late final Set<Product> _products;
+  late final Map<int, int> _quantities;
   double _totalPrice = 0;
 
-  Cart(this._products);
+  Cart() {
+    _products = {};
+    _quantities = {};
+  }
+
+  Cart.fromSetAndMap(this._products, this._quantities) {
+    for (var p in _products) {
+      _totalPrice += p.price * (_quantities[p.id] ?? 0);
+    }
+  }
 
   UnmodifiableListView<Product> get products => UnmodifiableListView(_products);
   UnmodifiableMapView<int, int> get quantities =>
