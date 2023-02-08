@@ -49,4 +49,30 @@ class Validator {
 
     return null;
   }
+
+  static String? validateCep(String? value) {
+    final regexCep = RegExp(r'^\d{5}-\d{3}$');
+    final typeValidation = validateString(value);
+
+    if (typeValidation != null) return typeValidation;
+
+    if (!regexCep.hasMatch(value!)) {
+      return 'CEP deve ter o formato 00000-000';
+    }
+
+    return null;
+  }
+
+  static String? validateState(String? value) {
+    final regexState = RegExp(r'^\w{2}$');
+    final typeValidation = validateString(value);
+
+    if (typeValidation != null) return typeValidation;
+
+    if (!regexState.hasMatch(value!)) {
+      return 'Estado deve estar em sigla. Ex: MT, MS, RJ...';
+    }
+
+    return null;
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/addresses/address.dart';
 import 'package:front/addresses/address_service.dart';
+import 'package:front/addresses/new_address_form_view.dart';
 
 class AddressSelect extends StatefulWidget {
   final String? Function(dynamic) validator;
@@ -45,30 +46,42 @@ class _AddressSelectState extends State<AddressSelect> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: FutureBuilder(
-        future: futureList,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return DropdownButtonFormField(
-              validator: widget.validator,
-              onSaved: widget.onSaved,
-              value: selectedValue,
-              items: snapshot.data!.map((e) => toMenuItem(e)).toList(),
-              onChanged: (dynamic e) {
-                setState(() {
-                  selectedValue = e;
-                });
-              },
-              decoration: const InputDecoration(labelText: 'Endereço'),
-            );
-          } else if (snapshot.hasError) {
-            return Text("$snapshot.error");
-          }
+    return Row(
+      children: [
+        Expanded(
+          child: FutureBuilder(
+            future: futureList,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return DropdownButtonFormField(
+                  validator: widget.validator,
+                  onSaved: widget.onSaved,
+                  value: selectedValue,
+                  items: snapshot.data!.map((e) => toMenuItem(e)).toList(),
+                  onChanged: (dynamic e) {
+                    setState(() {
+                      selectedValue = e;
+                    });
+                  },
+                  decoration: const InputDecoration(labelText: 'Endereço'),
+                );
+              } else if (snapshot.hasError) {
+                return Text("$snapshot.error");
+              }
 
-          return const CircularProgressIndicator();
-        },
-      ),
+              return const CircularProgressIndicator();
+            },
+          ),
+        ),
+        Center(
+          child: IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(NewAddressFormView.route);
+            },
+            icon: const Icon(Icons.add),
+          ),
+        )
+      ],
     );
   }
 }

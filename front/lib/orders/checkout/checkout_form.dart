@@ -50,8 +50,9 @@ class _CheckoutFormState extends State<CheckoutForm> {
     return Form(
       key: _formKey,
       child: SizedBox(
-        height: 100,
+        height: 120,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             AddressSelect(
               validator: _validateAddress,

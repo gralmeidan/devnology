@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/addresses/new_address_form_view.dart';
 import 'package:front/auth/sign_in_form_view.dart';
 import 'package:front/auth/sign_up_form_view.dart';
 import 'package:front/auth/user_model.dart';
@@ -28,6 +29,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
+        NewAddressFormView.route: (context) => const NewAddressFormView(),
         SignUpFormView.route: (context) => const SignUpFormView(),
         SignInFormView.route: (context) => const SignInFormView(),
         ProductsListingView.route: (context) => const ProductsListingView(),
