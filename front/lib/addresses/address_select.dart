@@ -18,11 +18,14 @@ class AddressSelect extends StatefulWidget {
 
 class _AddressSelectState extends State<AddressSelect> {
   late Future<List<Address>> futureList;
-  late int selectedValue;
+  int? selectedValue;
 
   Future<List<Address>> fetchAddresses() async {
     final response = await AddressService.fetchAll();
-    selectedValue = response[0].id;
+
+    if (response.isNotEmpty) {
+      selectedValue = response[0].id;
+    }
 
     return response;
   }
