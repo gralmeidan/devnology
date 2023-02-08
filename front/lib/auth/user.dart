@@ -26,4 +26,11 @@ class User {
   String get initials {
     return firstName[0] + lastName[0];
   }
+
+  Map toJson() => {
+        'id': id,
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+      };
 }
