@@ -1,8 +1,6 @@
 import 'dart:convert';
-
 import 'package:front/auth/authenticated_client.dart';
 import 'package:front/auth/user.dart';
-import 'package:http/http.dart' as http;
 
 class UserService {
   static Future<User> signIn({
@@ -24,19 +22,38 @@ class UserService {
     );
 
     if (response.statusCode == 200) {
-      // On Flutter Web set-cookie should be handled by the browser, but if
-      // it isn't then we'll handle it ourselves.
-      if (response.headers['set-cookie'] != null) {
-        final cookies =
-            response.headers['set-cookie']!.split(';').map((e) => e.split('='));
-        for (var cookie in cookies) {
-          AuthenticatedClient().setCookie(cookie[0], cookie[1]);
-        }
-      }
-
       return User.fromJson(jsonDecode(response.body));
     }
 
     throw Exception('Failed to login');
+  }
+
+  static Future<User> signUp({
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String password,
+  }) async {
+    final uri = Uri.parse('http://localhost:3001/signup');
+    final client = AuthenticatedClient();
+
+    final response = await client.post(
+      uri,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'firstName': firstName,
+        'lastName': lastName,
+        'email': email,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      return User.fromJson(jsonDecode(response.body));
+    }
+
+    throw Exception('Failed to register new user');
   }
 }

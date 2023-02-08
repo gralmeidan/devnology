@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/auth/sign_up_view.dart';
 import 'package:front/auth/user_model.dart';
 import 'package:front/auth/user_service.dart';
 import 'package:front/products_listing/products_listing_view.dart';
@@ -59,6 +60,20 @@ class _SignInFormState extends State<SignInForm> {
             child: ElevatedButton(
               onPressed: _submit,
               child: const Text('Enviar'),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 10.0),
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(SignUpView.route);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.grey[300],
+                foregroundColor: Colors.black,
+              ),
+              child: const Text('Cadastrar'),
             ),
           )
         ],

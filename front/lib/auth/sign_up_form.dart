@@ -23,6 +23,18 @@ class _SignUpFormState extends State<SignUpForm> {
   void _submit() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+
+      final user = await UserService.signUp(
+        firstName: _firstName!,
+        lastName: _lastName!,
+        email: _email!,
+        password: _password!,
+      );
+
+      if (context.mounted) {
+        context.read<UserModel>().setUser(user);
+        Navigator.of(context).pushNamed(ProductsListingView.route);
+      }
     }
   }
 
