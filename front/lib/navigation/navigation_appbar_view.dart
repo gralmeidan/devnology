@@ -18,22 +18,23 @@ class NavigationAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: title,
       actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: IconButton(
-            onPressed: () {
-              Scaffold.of(context).openEndDrawer();
-            },
-            icon: const Icon(
-              Icons.shopping_cart,
-              size: 30,
+        if (Scaffold.of(context).hasEndDrawer)
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: IconButton(
+              onPressed: () {
+                Scaffold.of(context).openEndDrawer();
+              },
+              icon: const Icon(
+                Icons.shopping_cart,
+                size: 30,
+              ),
             ),
           ),
-        ),
       ],
       leading: IconButton(
         onPressed: () {
-          Navigator.of(context).pushNamed('/');
+          Navigator.of(context).pushNamed('/products');
         },
         icon: const Icon(
           Icons.home,
