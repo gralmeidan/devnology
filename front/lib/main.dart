@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/addresses/address_model.dart';
 import 'package:front/addresses/new_address_form_view.dart';
 import 'package:front/auth/sign_in_form_view.dart';
 import 'package:front/auth/sign_up_form_view.dart';
@@ -15,6 +16,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => CartModel()),
         ChangeNotifierProvider(create: (context) => UserModel()),
+        ChangeNotifierProvider(create: (context) => AddressModel()),
       ],
       child: const MainApp(),
     ),
