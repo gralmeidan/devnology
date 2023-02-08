@@ -6,6 +6,8 @@ import 'package:front/orders/order.dart';
 import 'package:front/orders/order_service.dart';
 
 class OrdersListingView extends StatefulWidget {
+  static String route = '/orders';
+
   const OrdersListingView({super.key});
 
   @override

@@ -27,10 +27,10 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => const SignInView(),
-        '/products': (context) => const ProductsListingView(),
-        '/checkout': (context) => const CheckoutView(),
-        '/orders': (context) => const OrdersListingView()
+        SignInView.route: (context) => const SignInView(),
+        ProductsListingView.route: (context) => const ProductsListingView(),
+        CheckoutView.route: (context) => const CheckoutView(),
+        OrdersListingView.route: (context) => const OrdersListingView()
       },
     );
   }

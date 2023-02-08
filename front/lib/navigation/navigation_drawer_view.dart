@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:front/auth/sign_in_view.dart';
 import 'package:front/auth/user_model.dart';
+import 'package:front/orders/listing/orders_listing_view.dart';
+import 'package:front/products_listing/products_listing_view.dart';
 import 'package:provider/provider.dart';
 
 class NavigationDrawerView extends StatelessWidget {
@@ -29,7 +32,7 @@ class NavigationDrawerView extends StatelessWidget {
                 ),
                 child: TextButton.icon(
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/');
+                    Navigator.of(context).pushNamed(SignInView.route);
                   },
                   icon: const Icon(
                     Icons.account_circle,
@@ -48,13 +51,13 @@ class NavigationDrawerView extends StatelessWidget {
               );
             },
           ),
-          const _NavigationLink(
+          _NavigationLink(
             label: 'Produtos',
-            route: '/products',
+            route: ProductsListingView.route,
           ),
-          const _NavigationLink(
-            label: 'Orders',
-            route: '/orders',
+          _NavigationLink(
+            label: 'Meus Pedidos',
+            route: OrdersListingView.route,
           ),
         ],
       ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:front/auth/sign_in_form.dart';
 
 class SignInView extends StatelessWidget {
+  static String route = '/signin';
+
   const SignInView({super.key});
 
   @override

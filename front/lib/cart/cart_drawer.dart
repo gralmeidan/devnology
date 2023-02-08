@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/cart/cart_listing.dart';
 import 'package:front/cart/cart_model.dart';
+import 'package:front/orders/checkout/checkout_view.dart';
 import 'package:front/utils/formatter.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +41,7 @@ class CartDrawer extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/checkout');
+                    Navigator.of(context).pushNamed(CheckoutView.route);
                   },
                   icon: const Icon(Icons.shopping_cart_checkout),
                 ),

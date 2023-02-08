@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front/auth/user_model.dart';
 import 'package:front/auth/user_service.dart';
+import 'package:front/products_listing/products_listing_view.dart';
 import 'package:provider/provider.dart';
 
 class SignInForm extends StatefulWidget {
@@ -26,7 +27,7 @@ class _SignInFormState extends State<SignInForm> {
 
       if (context.mounted) {
         context.read<UserModel>().setUser(user);
-        Navigator.of(context).pushNamed('/products');
+        Navigator.of(context).pushNamed(ProductsListingView.route);
       }
     }
   }

@@ -4,6 +4,8 @@ import 'package:front/navigation/navigation_appbar_view.dart';
 import 'package:front/orders/checkout/checkout_form.dart';
 
 class CheckoutView extends StatelessWidget {
+  static String route = '/checkout';
+
   const CheckoutView({super.key});
 
   @override

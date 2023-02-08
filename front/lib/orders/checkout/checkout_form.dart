@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:front/addresses/address_select.dart';
 import 'package:front/cart/cart.dart';
 import 'package:front/cart/cart_model.dart';
+import 'package:front/orders/listing/orders_listing_view.dart';
 import 'package:front/orders/order_service.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,7 @@ class _CheckoutFormState extends State<CheckoutForm> {
 
       if (context.mounted) {
         context.read<CartModel>().clear();
-        Navigator.of(context).pushNamed('/orders');
+        Navigator.of(context).pushNamed(OrdersListingView.route);
       }
     }
   }

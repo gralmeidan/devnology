@@ -7,6 +7,8 @@ import 'package:front/products_listing/product_card.dart';
 import 'package:front/products_listing/product_service.dart';
 
 class ProductsListingView extends StatefulWidget {
+  static String route = '/';
+
   const ProductsListingView({super.key});
 
   @override
