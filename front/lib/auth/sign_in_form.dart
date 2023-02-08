@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:front/auth/user_model.dart';
 import 'package:front/auth/user_service.dart';
 import 'package:front/products_listing/products_listing_view.dart';
+import 'package:front/utils/validator.dart';
+import 'package:front/widgets/form_text_input.dart';
 import 'package:provider/provider.dart';
 
 class SignInForm extends StatefulWidget {
@@ -32,26 +34,6 @@ class _SignInFormState extends State<SignInForm> {
     }
   }
 
-  String? _validateEmail(String? value) {
-    final regexEmail = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-
-    if (!regexEmail.hasMatch(value ?? '')) {
-      return 'E-mail inválido';
-    }
-    return null;
-  }
-
-  String? _validatePassword(String? value) {
-    if (value == null) {
-      return 'Senha deve ser preenchida';
-    }
-
-    if (value.length < 6) {
-      return 'Senha deve ter no mínimo 6 caracteres';
-    }
-    return null;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -59,26 +41,17 @@ class _SignInFormState extends State<SignInForm> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(
-            height: 70,
-            child: TextFormField(
-              validator: _validateEmail,
-              onSaved: (value) => _email = value,
-              decoration: const InputDecoration(labelText: 'E-mail'),
-              onEditingComplete: () {
-                FocusScope.of(context).nextFocus();
-              },
-            ),
+          FormTextInput(
+            validator: Validator.validateEmail,
+            onSaved: (value) => _email = value,
+            label: 'E-mail',
           ),
-          SizedBox(
-            height: 70,
-            child: TextFormField(
-              obscureText: true,
-              validator: _validatePassword,
-              onSaved: (value) => _password = value,
-              decoration: const InputDecoration(labelText: 'Senha'),
-              onEditingComplete: _submit,
-            ),
+          FormTextInput(
+            validator: Validator.validatePassword,
+            onSaved: (value) => _password = value,
+            label: 'Senha',
+            obscureText: true,
+            submit: _submit,
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10.0),
