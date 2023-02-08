@@ -10,6 +10,7 @@ class UserModel extends ChangeNotifier {
   String? get email => _user?.email;
   String? get name => _user?.name;
   String? get initials => _user?.initials;
+  bool get hasUser => _user != null;
 
   void setUser(User user) {
     _user = user;

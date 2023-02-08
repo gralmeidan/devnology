@@ -13,11 +13,37 @@ class NavigationDrawerView extends StatelessWidget {
         children: [
           Consumer<UserModel>(
             builder: (context, value, child) {
-              return UserAccountsDrawerHeader(
-                accountName: Text(value.name ?? 'Lorem Ipsum'),
-                accountEmail: Text(value.email ?? 'lorem_ipsum@hotmail.com'),
-                currentAccountPicture: CircleAvatar(
-                  child: Text(value.initials ?? 'LI'),
+              if (value.hasUser) {
+                return UserAccountsDrawerHeader(
+                  accountName: Text(value.name!),
+                  accountEmail: Text(value.email!),
+                  currentAccountPicture: CircleAvatar(
+                    child: Text(value.initials!),
+                  ),
+                );
+              }
+
+              return DrawerHeader(
+                decoration: const BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: TextButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/');
+                  },
+                  icon: const Icon(
+                    Icons.account_circle,
+                    size: 48,
+                    color: Colors.white,
+                  ),
+                  label: const Text(
+                    'Entrar',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontFamily: 'Roboto',
+                    ),
+                  ),
                 ),
               );
             },
