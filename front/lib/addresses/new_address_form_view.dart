@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/addresses/address_service.dart';
 import 'package:front/utils/validator.dart';
 import 'package:front/widgets/form_text_input.dart';
 import 'package:front/widgets/layouts/form_layout.dart';
@@ -23,6 +24,18 @@ class _NewAddressFormViewState extends State<NewAddressFormView> {
   void _submit() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+
+      await AddressService.post(
+        street: _street!,
+        number: _number!,
+        city: _city!,
+        cep: _cep!,
+        state: _state!,
+      );
+
+      if (context.mounted) {
+        Navigator.of(context).pop();
+      }
     }
   }
 
