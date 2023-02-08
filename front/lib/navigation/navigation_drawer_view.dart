@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:front/auth/sign_in_view.dart';
+import 'package:front/auth/sign_in_form_view.dart';
 import 'package:front/auth/user_model.dart';
 import 'package:front/orders/listing/orders_listing_view.dart';
 import 'package:front/products_listing/products_listing_view.dart';
@@ -32,7 +32,7 @@ class NavigationDrawerView extends StatelessWidget {
                 ),
                 child: TextButton.icon(
                   onPressed: () {
-                    Navigator.of(context).pushNamed(SignInView.route);
+                    Navigator.of(context).pushNamed(SignInFormView.route);
                   },
                   icon: const Icon(
                     Icons.account_circle,

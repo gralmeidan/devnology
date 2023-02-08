@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:front/auth/sign_in_form.dart';
 
-class SignInView extends StatelessWidget {
-  static String route = '/signin';
+class FormLayout extends StatelessWidget {
+  final Widget child;
 
-  const SignInView({super.key});
+  const FormLayout({
+    super.key,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[350],
-      body: const Center(
+      body: Center(
         child: SizedBox(
           width: 400,
           child: Card(
             child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: SignInForm(),
+              padding: const EdgeInsets.all(16.0),
+              child: child,
             ),
           ),
         ),
