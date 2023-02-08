@@ -24,6 +24,11 @@ class _CheckoutFormState extends State<CheckoutForm> {
         addressId: _addressId!,
         cart: cart,
       );
+
+      if (context.mounted) {
+        context.read<CartModel>().clear();
+        Navigator.of(context).pushNamed('/orders');
+      }
     }
   }
 

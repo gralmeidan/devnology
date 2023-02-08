@@ -45,6 +45,12 @@ class Cart {
     _totalPrice -= product.price;
   }
 
+  void clear() {
+    _products.clear();
+    _quantities.clear();
+    _totalPrice = 0;
+  }
+
   List toJson() {
     return products
         .map(
