@@ -32,15 +32,6 @@ class NavigationAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
       ],
-      leading: IconButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed('/products');
-        },
-        icon: const Icon(
-          Icons.home,
-          size: 30,
-        ),
-      ),
     );
   }
 }

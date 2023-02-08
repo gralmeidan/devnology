@@ -22,4 +22,8 @@ class User {
   String get name {
     return '$firstName $lastName';
   }
+
+  String get initials {
+    return firstName[0] + lastName[0];
+  }
 }

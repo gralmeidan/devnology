@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/navigation/navigation_appbar_view.dart';
+import 'package:front/navigation/navigation_drawer_view.dart';
 import 'package:front/orders/listing/order_card.dart';
 import 'package:front/orders/order.dart';
 import 'package:front/orders/order_service.dart';
@@ -23,6 +24,7 @@ class _OrdersListingViewState extends State<OrdersListingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const NavigationDrawerView(),
       appBar: const NavigationAppBar(
         title: Text('Pedidos'),
       ),
