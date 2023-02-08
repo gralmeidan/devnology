@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:front/auth/sign_in_view.dart';
+import 'package:front/auth/user_model.dart';
 import 'package:front/cart/cart_model.dart';
 import 'package:front/orders/checkout/checkout_view.dart';
 import 'package:front/orders/listing/orders_listing_view.dart';
@@ -7,10 +8,15 @@ import 'package:front/products_listing/products_listing_view.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider(
-    create: (context) => CartModel(),
-    child: const MainApp(),
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => CartModel()),
+        ChangeNotifierProvider(create: (context) => UserModel()),
+      ],
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {

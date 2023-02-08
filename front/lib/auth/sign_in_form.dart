@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:front/auth/user_model.dart';
 import 'package:front/auth/user_service.dart';
+import 'package:provider/provider.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
@@ -16,12 +18,14 @@ class _SignInFormState extends State<SignInForm> {
   void _submit() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      await UserService.signIn(
+
+      final user = await UserService.signIn(
         email: _email!,
         password: _password!,
       );
 
       if (context.mounted) {
+        context.read<UserModel>().setUser(user);
         Navigator.of(context).pushNamed('/products');
       }
     }
