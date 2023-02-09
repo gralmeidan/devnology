@@ -18,6 +18,7 @@ class NavigationAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: title,
       actions: [
+        ...additionalActions,
         if (Scaffold.of(context).hasEndDrawer)
           Padding(
             padding: const EdgeInsets.only(right: 20),

@@ -17,6 +17,7 @@ class ProductsListingView extends StatefulWidget {
 
 class _ProductsListingView extends State<ProductsListingView> {
   late Future<List<Product>> futureList;
+  bool isSearchOpen = false;
 
   @override
   void initState() {
@@ -29,8 +30,38 @@ class _ProductsListingView extends State<ProductsListingView> {
     return Scaffold(
       drawer: const NavigationDrawerView(),
       endDrawer: const CartDrawer(),
-      appBar: const NavigationAppBar(
-        title: Text('Produtos'),
+      appBar: NavigationAppBar(
+        title: isSearchOpen
+            ? Expanded(
+                child: TextField(
+                  cursorColor: Colors.white,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    hintStyle: TextStyle(color: Colors.grey[200]),
+                    hintText: 'Pesquisa',
+                  ),
+                ),
+              )
+            : const Text('Produtos'),
+        additionalActions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                isSearchOpen = !isSearchOpen;
+              });
+            },
+            icon: Icon(
+              isSearchOpen ? Icons.search_off : Icons.search,
+              size: 30,
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: FutureBuilder(
