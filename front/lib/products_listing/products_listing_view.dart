@@ -22,7 +22,7 @@ class _ProductsListingView extends State<ProductsListingView> {
   @override
   void initState() {
     super.initState();
-    futureList = const ProductService().fetchAll();
+    futureList = const ProductService().fetchAll('');
   }
 
   @override
@@ -32,27 +32,33 @@ class _ProductsListingView extends State<ProductsListingView> {
       endDrawer: const CartDrawer(),
       appBar: NavigationAppBar(
         title: isSearchOpen
-            ? Expanded(
-                child: TextField(
-                  cursorColor: Colors.white,
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                    hintStyle: TextStyle(color: Colors.grey[200]),
-                    hintText: 'Pesquisa',
+            ? TextField(
+                cursorColor: Colors.white,
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  enabledBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
                   ),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                  hintStyle: TextStyle(color: Colors.grey[200]),
+                  hintText: 'Pesquisa',
                 ),
+                onChanged: (value) {
+                  setState(() {
+                    futureList = const ProductService().fetchAll(value);
+                  });
+                },
               )
             : const Text('Produtos'),
         additionalActions: [
           IconButton(
             onPressed: () {
               setState(() {
+                if (isSearchOpen) {
+                  futureList = const ProductService().fetchAll('');
+                }
                 isSearchOpen = !isSearchOpen;
               });
             },
@@ -68,9 +74,12 @@ class _ProductsListingView extends State<ProductsListingView> {
           future: futureList,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return ListView.builder(itemBuilder: (context, index) {
-                return ProductCard(product: snapshot.data![index]);
-              });
+              return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return ProductCard(product: snapshot.data![index]);
+                },
+              );
             } else if (snapshot.hasError) {
               return Text("$snapshot.error");
             }
