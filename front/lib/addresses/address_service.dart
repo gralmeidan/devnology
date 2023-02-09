@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:front/addresses/address.dart';
 import 'package:front/auth/authenticated_client.dart';
@@ -48,6 +49,12 @@ class AddressService {
       return Address.fromJson(jsonDecode(response.body));
     }
 
-    throw Exception('Failed to post address');
+    if (response.statusCode == 401) {
+      throw const HttpException(
+        'Você precisa estar logado para salvar um endereço',
+      );
+    }
+
+    throw HttpException(jsonDecode(response.body)['message']);
   }
 }

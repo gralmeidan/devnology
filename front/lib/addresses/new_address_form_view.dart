@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:front/addresses/address_model.dart';
 import 'package:front/addresses/address_service.dart';
+import 'package:front/utils/show_err_dialog.dart';
 import 'package:front/utils/validator.dart';
 import 'package:front/widgets/form_text_input.dart';
 import 'package:front/widgets/layouts/form_layout.dart';
@@ -27,17 +30,25 @@ class _NewAddressFormViewState extends State<NewAddressFormView> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      final address = await AddressService.post(
-        street: _street!,
-        number: _number!,
-        city: _city!,
-        cep: _cep!,
-        state: _state!,
-      );
+      try {
+        final address = await AddressService.post(
+          street: _street!,
+          number: _number!,
+          city: _city!,
+          cep: _cep!,
+          state: _state!,
+        );
 
-      if (context.mounted) {
-        Navigator.of(context).pop();
-        context.read<AddressModel>().add(address);
+        if (context.mounted) {
+          Navigator.of(context).pop();
+          context.read<AddressModel>().add(address);
+        }
+      } catch (e) {
+        if (context.mounted) {
+          final message =
+              e is HttpException ? e.message : 'Tente novamente mais tarde';
+          showErrDialog(context: context, message: message);
+        }
       }
     }
   }

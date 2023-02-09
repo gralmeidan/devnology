@@ -76,7 +76,10 @@ class _AddressSelectState extends State<AddressSelect> {
                   },
                 );
               } else if (snapshot.hasError) {
-                return Text("$snapshot.error");
+                return const Text(
+                  "Você precisa estar logado para fazer o checkout",
+                  style: TextStyle(fontSize: 20),
+                );
               }
 
               return const CircularProgressIndicator();
