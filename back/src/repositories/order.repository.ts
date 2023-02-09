@@ -24,6 +24,7 @@ export default class OrderRepository {
         as: 'address',
       },
     ],
+    order: [['createdAt', 'desc']],
   };
 
   public insert(
