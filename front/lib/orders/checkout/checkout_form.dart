@@ -4,6 +4,7 @@ import 'package:front/cart/cart.dart';
 import 'package:front/cart/cart_model.dart';
 import 'package:front/orders/listing/orders_listing_view.dart';
 import 'package:front/orders/order_service.dart';
+import 'package:front/utils/show_err_dialog.dart';
 import 'package:provider/provider.dart';
 
 class CheckoutForm extends StatefulWidget {
@@ -21,14 +22,23 @@ class _CheckoutFormState extends State<CheckoutForm> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      await OrderService.placeOrder(
-        addressId: _addressId!,
-        cart: cart,
-      );
+      try {
+        await OrderService.placeOrder(
+          addressId: _addressId!,
+          cart: cart,
+        );
 
-      if (context.mounted) {
-        context.read<CartModel>().clear();
-        Navigator.of(context).pushNamed(OrdersListingView.route);
+        if (context.mounted) {
+          context.read<CartModel>().clear();
+          Navigator.of(context).pushNamed(OrdersListingView.route);
+        }
+      } catch (e) {
+        if (context.mounted) {
+          showErrDialog(
+            context: context,
+            message: 'Tente novamente mais tarde',
+          );
+        }
       }
     }
   }

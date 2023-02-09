@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:front/auth/authenticated_client.dart';
 import 'package:front/auth/user.dart';
 
@@ -23,6 +24,14 @@ class UserService {
 
     if (response.statusCode == 200) {
       return User.fromJson(jsonDecode(response.body));
+    }
+
+    if (response.statusCode == 404) {
+      throw const HttpException('Usuário inexistente');
+    }
+
+    if (response.statusCode == 401) {
+      throw const HttpException('Senha incorreta');
     }
 
     throw Exception('Failed to login');
@@ -52,6 +61,10 @@ class UserService {
 
     if (response.statusCode == 201) {
       return User.fromJson(jsonDecode(response.body));
+    }
+
+    if (response.statusCode == 409) {
+      throw const HttpException('Usuário já existe');
     }
 
     throw Exception('Failed to register new user');

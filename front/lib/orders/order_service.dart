@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:front/auth/authenticated_client.dart';
 import 'package:front/cart/cart.dart';
@@ -35,6 +36,10 @@ class OrderService {
     final response = await client.get(uri, headers: {
       'Content-Type': 'application/json',
     });
+
+    if (response.statusCode == 401) {
+      throw HttpException('É preciso estar logado para resgatar pedidos');
+    }
 
     if (response.statusCode != 200) {
       throw Exception('Failed to fetch orders');

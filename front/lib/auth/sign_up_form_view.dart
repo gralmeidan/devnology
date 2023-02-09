@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:front/auth/user_model.dart';
 import 'package:front/auth/user_service.dart';
 import 'package:front/products_listing/products_listing_view.dart';
+import 'package:front/utils/show_err_dialog.dart';
 import 'package:front/utils/validator.dart';
 import 'package:front/widgets/form_text_input.dart';
 import 'package:front/widgets/layouts/form_layout.dart';
@@ -27,16 +30,22 @@ class _SignUpFormViewState extends State<SignUpFormView> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      final user = await UserService.signUp(
-        firstName: _firstName!,
-        lastName: _lastName!,
-        email: _email!,
-        password: _password!,
-      );
+      try {
+        final user = await UserService.signUp(
+          firstName: _firstName!,
+          lastName: _lastName!,
+          email: _email!,
+          password: _password!,
+        );
 
-      if (context.mounted) {
-        context.read<UserModel>().setUser(user);
-        Navigator.of(context).pushNamed(ProductsListingView.route);
+        if (context.mounted) {
+          context.read<UserModel>().setUser(user);
+          Navigator.of(context).pushNamed(ProductsListingView.route);
+        }
+      } catch (e) {
+        final message =
+            e is HttpException ? e.message : 'Tente novamente mais tarde';
+        showErrDialog(context: context, message: message);
       }
     }
   }

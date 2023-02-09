@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:front/navigation/navigation_appbar_view.dart';
 import 'package:front/navigation/navigation_drawer_view.dart';
@@ -43,7 +45,11 @@ class _OrdersListingViewState extends State<OrdersListingView> {
                 },
               );
             } else if (snapshot.hasError) {
-              return Text('Error: $snapshot.error');
+              return Text(
+                snapshot.error is HttpException
+                    ? (snapshot.error as HttpException).message
+                    : 'Algo deu errado',
+              );
             }
 
             return const CircularProgressIndicator();

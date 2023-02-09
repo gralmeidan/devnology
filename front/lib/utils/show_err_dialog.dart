@@ -13,14 +13,6 @@ Future<void> showErrDialog({
         content: SingleChildScrollView(
           child: Text(message),
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-            child: const Text('Prosseguir'),
-          )
-        ],
       );
     },
   );
