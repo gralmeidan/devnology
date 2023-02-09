@@ -1,4 +1,4 @@
-import { Model, INTEGER, DECIMAL } from 'sequelize';
+import { Model, INTEGER, DATE } from 'sequelize';
 import db from '.';
 import UserModel from './user.model';
 import OrderProduct from './orderProduct.model';
@@ -20,13 +20,20 @@ OrderModel.init(
     },
     userId: INTEGER,
     addressId: INTEGER,
+    createdAt: {
+      type: DATE,
+      field: 'created_at',
+    },
   },
   {
     underscored: true,
     sequelize: db,
     modelName: 'order',
     tableName: 'orders',
-    timestamps: false,
+    updatedAt: false,
+    defaultScope: {
+      attributes: { exclude: ['createdAt'] },
+    },
   }
 );
 
