@@ -4,7 +4,7 @@ import 'package:front/products_listing/product.dart';
 import 'package:http/http.dart' as http;
 
 class ProductService {
-  Future<List<Product>> _fetchAllFrom(
+  static Future<List<Product>> _fetchAllFrom(
     String provider,
     String query,
   ) async {
@@ -21,15 +21,15 @@ class ProductService {
     throw Exception('Failed to fetch from $provider');
   }
 
-  Future<List<Product>> _fetchAllFromBrazilian(String query) {
-    return _fetchAllFrom('brazilian_provider', '?nome=${query}');
+  static Future<List<Product>> _fetchAllFromBrazilian(String query) {
+    return _fetchAllFrom('brazilian_provider', '?nome=$query');
   }
 
-  Future<List<Product>> _fetchAllFromEuropean(String query) {
-    return _fetchAllFrom('european_provider', '?name=${query}');
+  static Future<List<Product>> _fetchAllFromEuropean(String query) {
+    return _fetchAllFrom('european_provider', '?name=$query');
   }
 
-  Future<List<Product>> fetchAll(String query) async {
+  static Future<List<Product>> fetchAll([String query = '']) async {
     final brazilianProducts = _fetchAllFromBrazilian(query);
     final europeanProducts = _fetchAllFromEuropean(query);
 

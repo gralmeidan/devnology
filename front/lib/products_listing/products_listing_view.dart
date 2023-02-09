@@ -22,7 +22,7 @@ class _ProductsListingView extends State<ProductsListingView> {
   @override
   void initState() {
     super.initState();
-    futureList = const ProductService().fetchAll('');
+    futureList = ProductService.fetchAll();
   }
 
   @override
@@ -47,7 +47,7 @@ class _ProductsListingView extends State<ProductsListingView> {
                 ),
                 onChanged: (value) {
                   setState(() {
-                    futureList = const ProductService().fetchAll(value);
+                    futureList = ProductService.fetchAll(value);
                   });
                 },
               )
@@ -57,7 +57,7 @@ class _ProductsListingView extends State<ProductsListingView> {
             onPressed: () {
               setState(() {
                 if (isSearchOpen) {
-                  futureList = const ProductService().fetchAll('');
+                  futureList = ProductService.fetchAll();
                 }
                 isSearchOpen = !isSearchOpen;
               });
