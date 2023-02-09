@@ -6,6 +6,7 @@
   "scripts": {
     "start": "npm run build && node ./dist/server.js",
     "dev": "tsnd ./src/server.ts",
+    "dev:db:reset": "npm run db:reset && tsnd ./src/server.ts",
     "build": "tsc",
     "test": "mocha --require ts-node/register $(find . -name '*.test.ts')",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
